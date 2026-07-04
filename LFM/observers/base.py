@@ -1,13 +1,18 @@
-# Base Observer
+# Base Observer / Utilities
 
+import numpy as np
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Dict
+
+def clean_array(arr: np.ndarray) -> np.ndarray:
+    """NaN/infを除去する共通ユーティリティ"""
+    return arr[np.isfinite(arr)]
 
 class BaseObserver(ABC):
     """全Observerの基底クラス"""
     @abstractmethod
-    def measure(self, state: Any) -> float:
-        """状態に対する計測値を返す"""
+    def measure(self, storage: Any, tick: int, **kwargs) -> Dict:
+        """storageとtickを受け取り計測"""
         pass
     
     @property
